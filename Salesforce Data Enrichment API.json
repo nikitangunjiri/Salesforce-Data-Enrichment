@@ -1,0 +1,1824 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "GetProspect API",
+    "description": "GetProspect API reference v1.1",
+    "contact": {},
+    "version": "1.1"
+  },
+  "servers": [
+    {
+      "url": "https://virtserver.swaggerhub.com/resumescore/Enrichment/1.1",
+      "description": "SwaggerHub API Auto Mocking"
+    },
+    {
+      "url": "https://api.getprospect.com"
+    }
+  ],
+  "paths": {
+    "/api/v1/contacts/lists": {
+      "get": {
+        "tags": [
+          "Lists"
+        ],
+        "summary": "Get all lists",
+        "description": "Get all contacts lists",
+        "operationId": "ListController_getAllLists",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Lists"
+        ],
+        "summary": "Create new list",
+        "description": "Add new contact list",
+        "operationId": "ListController_createList",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateListDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Lists"
+        ],
+        "summary": "Permanently delete lists",
+        "description": "Permanently delete multiple lists",
+        "operationId": "ListController_deleteLists",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Lists"
+        ],
+        "summary": "Update lists deleted status",
+        "description": "Update multiple lists",
+        "operationId": "ListController_updateListsStatuses",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateListStatusDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/contacts/lists/lists-sizes": {
+      "post": {
+        "tags": [
+          "Lists"
+        ],
+        "summary": "Get count",
+        "description": "Get lists count dy list id",
+        "operationId": "ListController_getListsCount",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchListsCountDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/contacts/lists/{listId}": {
+      "patch": {
+        "tags": [
+          "Lists"
+        ],
+        "summary": "Update list",
+        "description": "Update list by id",
+        "operationId": "ListController_updateList",
+        "parameters": [
+          {
+            "name": "listId",
+            "in": "path",
+            "description": "List id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateListDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/contacts/lists/{list}/add": {
+      "post": {
+        "tags": [
+          "Lists"
+        ],
+        "summary": "Add contacts to list",
+        "description": "Save new contacts to list",
+        "operationId": "ListController_addContactsToList",
+        "parameters": [
+          {
+            "name": "list",
+            "in": "path",
+            "description": "List id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddContactsDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/contacts/lists/{list}/contacts/search": {
+      "get": {
+        "tags": [
+          "Lists"
+        ],
+        "summary": "Search contacts related to list",
+        "description": "Search contacts by filter related to list",
+        "operationId": "ListController_getListContacts",
+        "parameters": [
+          {
+            "name": "list",
+            "in": "path",
+            "description": "list id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Should be ASC or DESC",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort field",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Page size",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/contacts/lists/tree": {
+      "get": {
+        "tags": [
+          "Lists"
+        ],
+        "summary": "Get list tree",
+        "description": "Get all lists tree",
+        "operationId": "ListController_getListsTree",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/contacts/lists/paginated": {
+      "get": {
+        "tags": [
+          "Lists"
+        ],
+        "summary": "Get paginated lists results",
+        "description": "Get paginated lists results",
+        "operationId": "ListController_getPaginatedLists",
+        "parameters": [
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Should be ASC or DESC",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort field",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Page size",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/contacts/lists/search/name": {
+      "post": {
+        "tags": [
+          "Lists"
+        ],
+        "summary": "Search through lists by name",
+        "description": "Search through lists by name",
+        "operationId": "ListController_searchLists",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchListsDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/contacts/lists/search": {
+      "post": {
+        "tags": [
+          "Lists"
+        ],
+        "summary": "Search lists",
+        "description": "Search lists by search type",
+        "operationId": "ListController_search",
+        "parameters": [
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Should be ASC or DESC",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort field",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Page size",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchListsDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/contacts/contact": {
+      "post": {
+        "tags": [
+          "Contacts"
+        ],
+        "summary": "Create contact",
+        "description": "Create new contact",
+        "operationId": "ContactController_create",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateContactDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/contacts/contact/{contactId}": {
+      "get": {
+        "tags": [
+          "Contacts"
+        ],
+        "summary": "Get single contact",
+        "description": "Get contact by id",
+        "operationId": "ContactController_getContact",
+        "parameters": [
+          {
+            "name": "contactId",
+            "in": "path",
+            "description": "Contact id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Contacts"
+        ],
+        "summary": "Delete contact",
+        "description": "Delete contact by id",
+        "operationId": "ContactController_delete",
+        "parameters": [
+          {
+            "name": "contactId",
+            "in": "path",
+            "description": "Contact id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Contacts"
+        ],
+        "summary": "Update contact",
+        "description": "Update contact by id",
+        "operationId": "ContactController_update",
+        "parameters": [
+          {
+            "name": "contactId",
+            "in": "path",
+            "description": "Contact id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateContactDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/contacts/contact/search": {
+      "post": {
+        "tags": [
+          "Contacts"
+        ],
+        "summary": "Search contacts",
+        "description": "Search contacts by filter",
+        "operationId": "ContactController_search",
+        "parameters": [
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Should be ASC or DESC",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort field",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Page size",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchContactsDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/contacts/contact/search/count": {
+      "post": {
+        "tags": [
+          "Contacts"
+        ],
+        "summary": "Search contacts",
+        "description": "Search contacts by filter",
+        "operationId": "ContactController_searchCount",
+        "parameters": [
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Should be ASC or DESC",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort field",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Page size",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchContactsDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/contacts/contact/{contactId}/companies": {
+      "post": {
+        "tags": [
+          "Contacts"
+        ],
+        "summary": "Add companies to contact",
+        "description": "Create a new contact-company relations",
+        "operationId": "ContactController_addCompaniesToContact",
+        "parameters": [
+          {
+            "name": "contactId",
+            "in": "path",
+            "description": "Contact id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddCompaniesRelationsDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/contacts/folders": {
+      "post": {
+        "tags": [
+          "Folders"
+        ],
+        "summary": "Create list folder",
+        "description": "Add new folder",
+        "operationId": "FolderController_create",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFolderDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/contacts/folders/{folderId}": {
+      "patch": {
+        "tags": [
+          "Folders"
+        ],
+        "summary": "Update folder",
+        "description": "Update folder by id",
+        "operationId": "FolderController_updateFolder",
+        "parameters": [
+          {
+            "name": "folderId",
+            "in": "path",
+            "description": "Folder id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateFolderDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/contacts/folders/tree": {
+      "get": {
+        "tags": [
+          "Folders"
+        ],
+        "summary": "Get folders tree",
+        "description": "Get folders tree",
+        "operationId": "FolderController_getFoldersTree",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/contacts/folders/{folderId}/lists": {
+      "get": {
+        "tags": [
+          "Folders"
+        ],
+        "summary": "Get folder lists",
+        "description": "Retrive all lists related to folder",
+        "operationId": "FolderController_getFolderLists",
+        "parameters": [
+          {
+            "name": "folderId",
+            "in": "path",
+            "description": "Folder id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Folders"
+        ],
+        "summary": "Move lists to folder",
+        "description": "Move lists to folder",
+        "operationId": "FolderController_addList",
+        "parameters": [
+          {
+            "name": "folderId",
+            "in": "path",
+            "description": "Folder id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddListsDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Folders"
+        ],
+        "summary": "Remove lists from folder",
+        "description": "Remove lists from folder",
+        "operationId": "FolderController_removeListsFromFolder",
+        "parameters": [
+          {
+            "name": "folderId",
+            "in": "path",
+            "description": "Folder id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/contacts/folders/{folderId}/all": {
+      "post": {
+        "tags": [
+          "Folders"
+        ],
+        "summary": "Move lists with folders to folder",
+        "description": "Move lists with folders to folder",
+        "operationId": "FolderController_addListsWithFolders",
+        "parameters": [
+          {
+            "name": "folderId",
+            "in": "path",
+            "description": "Folder id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddListsWithFoldersDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/contacts/folders/lists": {
+      "get": {
+        "tags": [
+          "Folders"
+        ],
+        "summary": "Get folders lists",
+        "description": "Get folders lists",
+        "operationId": "FolderController_getFoldersLists",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/companies/company": {
+      "get": {
+        "tags": [
+          "Companies"
+        ],
+        "summary": "Get all companies",
+        "description": "Return all companies for the current user",
+        "operationId": "CompanyController_findAll",
+        "parameters": [
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Should be ASC or DESC",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort field",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Page size",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Companies"
+        ],
+        "summary": "Create company",
+        "description": "Create a new company",
+        "operationId": "CompanyController_create",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCompanyDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/companies/company/search/name": {
+      "get": {
+        "tags": [
+          "Companies"
+        ],
+        "summary": "Search companies",
+        "description": "Search companies with name",
+        "operationId": "CompanyController_findCompanyWithName",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Company name string",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Query limit",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/companies/company/{companyId}": {
+      "get": {
+        "tags": [
+          "Companies"
+        ],
+        "summary": "Get single company",
+        "description": "Get company by id",
+        "operationId": "CompanyController_getCompany",
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "path",
+            "description": "Company id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Companies"
+        ],
+        "summary": "Delete company",
+        "description": "Delete company by id",
+        "operationId": "CompanyController_delete",
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "path",
+            "description": "Company id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Companies"
+        ],
+        "summary": "Update company",
+        "description": "Update company by id",
+        "operationId": "CompanyController_update",
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "path",
+            "description": "Company id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCompanyDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/insights/search": {
+      "post": {
+        "tags": [
+          "Insights"
+        ],
+        "summary": "Create search",
+        "description": "Search leads by filter options inside GetProspect Database",
+        "operationId": "InsightsController_createSearch",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSearchDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/insights/search/contact": {
+      "get": {
+        "tags": [
+          "Insights"
+        ],
+        "summary": "Search lead by LinkedIn link",
+        "operationId": "InsightsController_getContactByLinkedIn",
+        "parameters": [
+          {
+            "name": "linkedinUrl",
+            "in": "query",
+            "description": "LinkedIn link",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/insights/search/{searchId}": {
+      "get": {
+        "tags": [
+          "Insights"
+        ],
+        "summary": "Get search",
+        "description": "Check every minute status of this search to know when it finished",
+        "operationId": "InsightsController_getSingleSearch",
+        "parameters": [
+          {
+            "name": "searchId",
+            "in": "path",
+            "description": "Search id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/public/v1/email/verify/": {
+      "post": {
+        "tags": [
+          "Email"
+        ],
+        "summary": "Verify Email",
+        "description": "Verify email",
+        "operationId": "PublicApiController_sendBounceEmail",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/public/v1/email/verify": {
+      "get": {
+        "tags": [
+          "Email"
+        ],
+        "summary": "Find Email",
+        "description": "Find email by name and company",
+        "operationId": "PublicApiController_publicVerifyEmail",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "company",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SearchListsCountDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateListDto": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateListDto": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateListStatusDto": {
+        "required": [
+          "listsIds",
+          "operationType",
+          "updateContactsStatus"
+        ],
+        "type": "object",
+        "properties": {
+          "listsIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "updateContactsStatus": {
+            "type": "boolean"
+          },
+          "operationType": {
+            "type": "string"
+          }
+        }
+      },
+      "AddContactsDto": {
+        "required": [
+          "contactsIds"
+        ],
+        "type": "object",
+        "properties": {
+          "contactsIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "SearchListsDto": {
+        "required": [
+          "withParentFolder"
+        ],
+        "type": "object",
+        "properties": {
+          "withParentFolder": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PropertyItem": {
+        "required": [
+          "property",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "property": {
+            "type": "string"
+          },
+          "value": {
+            "type": "object"
+          }
+        }
+      },
+      "CreateContactDto": {
+        "required": [
+          "listRelations",
+          "properties"
+        ],
+        "type": "object",
+        "properties": {
+          "properties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PropertyItem"
+            }
+          },
+          "listRelations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Included": {
+        "required": [
+          "operator",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "operator": {
+            "type": "string"
+          },
+          "value": {
+            "type": "object"
+          }
+        }
+      },
+      "FilterItem": {
+        "required": [
+          "included",
+          "operator",
+          "property",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "operator": {
+            "type": "string"
+          },
+          "property": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "included": {
+            "$ref": "#/components/schemas/Included"
+          }
+        }
+      },
+      "SearchItem": {
+        "required": [
+          "properties",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "properties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "SearchContactsDto": {
+        "required": [
+          "filters",
+          "includeRelations",
+          "search"
+        ],
+        "type": "object",
+        "properties": {
+          "filters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FilterItem"
+            }
+          },
+          "search": {
+            "$ref": "#/components/schemas/SearchItem"
+          },
+          "includeRelations": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CompanyRelationsDto": {
+        "required": [
+          "companyId"
+        ],
+        "type": "object",
+        "properties": {
+          "companyId": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "position": {
+            "type": "string"
+          }
+        }
+      },
+      "AddCompaniesRelationsDto": {
+        "required": [
+          "companies"
+        ],
+        "type": "object",
+        "properties": {
+          "companies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CompanyRelationsDto"
+            }
+          }
+        }
+      },
+      "CreateFolderDto": {
+        "required": [
+          "name",
+          "parent"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "parent": {
+            "type": "string"
+          }
+        }
+      },
+      "DeleteFolderDto": {
+        "required": [
+          "folderIds"
+        ],
+        "type": "object",
+        "properties": {
+          "folderIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "UpdateFolderDto": {
+        "required": [
+          "name",
+          "parent"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "parent": {
+            "type": "string"
+          }
+        }
+      },
+      "AddListsDto": {
+        "required": [
+          "listsIds"
+        ],
+        "type": "object",
+        "properties": {
+          "listsIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "AddListsWithFoldersDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateCompanyDto": {
+        "required": [
+          "properties"
+        ],
+        "type": "object",
+        "properties": {
+          "properties": {
+            "$ref": "#/components/schemas/PropertyItem"
+          }
+        }
+      },
+      "CreateSearchDto": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
