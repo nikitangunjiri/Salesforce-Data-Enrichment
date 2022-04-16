@@ -8,10 +8,6 @@
   },
   "servers": [
     {
-      "url": "https://virtserver.swaggerhub.com/resumescore/Enrichment/1.1",
-      "description": "SwaggerHub API Auto Mocking"
-    },
-    {
       "url": "https://api.getprospect.com"
     }
   ],
@@ -21,18 +17,80 @@
         "tags": [
           "Lists"
         ],
-        "summary": "Get all lists",
-        "description": "Get all contacts lists",
-        "operationId": "ListController_getAllLists",
-        "parameters": [],
+        "summary": "Get lists",
+        "description": "Get contacts lists",
+        "operationId": "ListController_getLists",
+        "parameters": [
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Page size(default 10, max 500)",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Page number(default 1)",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort field",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Should be ASC or DESC",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Entity given",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKey": []
           }
         ]
       },
@@ -56,60 +114,39 @@
         },
         "responses": {
           "201": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "Lists"
-        ],
-        "summary": "Permanently delete lists",
-        "description": "Permanently delete multiple lists",
-        "operationId": "ListController_deleteLists",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      },
-      "patch": {
-        "tags": [
-          "Lists"
-        ],
-        "summary": "Update lists deleted status",
-        "description": "Update multiple lists",
-        "operationId": "ListController_updateListsStatuses",
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateListStatusDto"
+            "description": "Entity created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListModel"
+                }
               }
             }
           },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": ""
+          "400": {
+            "description": "Bad model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpBadRequestException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKey": []
           }
         ]
       }
@@ -119,7 +156,7 @@
         "tags": [
           "Lists"
         ],
-        "summary": "Get count",
+        "summary": "Get list size",
         "description": "Get lists count dy list id",
         "operationId": "ListController_getListsCount",
         "parameters": [],
@@ -134,13 +171,40 @@
           "required": true
         },
         "responses": {
-          "201": {
-            "description": ""
+          "200": {
+            "description": "Entity given",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListSizesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpBadRequestException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKey": []
           }
         ]
       }
@@ -178,12 +242,39 @@
         },
         "responses": {
           "200": {
-            "description": ""
+            "description": "Entity given",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpBadRequestException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKey": []
           }
         ]
       }
@@ -221,12 +312,32 @@
         },
         "responses": {
           "201": {
-            "description": ""
+            "description": "Entity created"
+          },
+          "400": {
+            "description": "Bad model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpBadRequestException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKey": []
           }
         ]
       }
@@ -236,7 +347,7 @@
         "tags": [
           "Lists"
         ],
-        "summary": "Search contacts related to list",
+        "summary": "Get list contacts",
         "description": "Search contacts by filter related to list",
         "operationId": "ListController_getListContacts",
         "parameters": [
@@ -252,14 +363,25 @@
             }
           },
           {
-            "name": "order",
+            "name": "pageSize",
             "in": "query",
-            "description": "Should be ASC or DESC",
+            "description": "Page size(default 10, max 500)",
             "required": false,
             "style": "form",
             "explode": true,
             "schema": {
-              "type": "string"
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Page number(default 1)",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
             }
           },
           {
@@ -274,71 +396,6 @@
             }
           },
           {
-            "name": "pageNumber",
-            "in": "query",
-            "description": "Page number",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "pageSize",
-            "in": "query",
-            "description": "Page size",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
-    "/api/v1/contacts/lists/tree": {
-      "get": {
-        "tags": [
-          "Lists"
-        ],
-        "summary": "Get list tree",
-        "description": "Get all lists tree",
-        "operationId": "ListController_getListsTree",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
-    "/api/v1/contacts/lists/paginated": {
-      "get": {
-        "tags": [
-          "Lists"
-        ],
-        "summary": "Get paginated lists results",
-        "description": "Get paginated lists results",
-        "operationId": "ListController_getPaginatedLists",
-        "parameters": [
-          {
             "name": "order",
             "in": "query",
             "description": "Should be ASC or DESC",
@@ -348,156 +405,81 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "Sort field",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "pageNumber",
-            "in": "query",
-            "description": "Page number",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "pageSize",
-            "in": "query",
-            "description": "Page size",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "number"
-            }
           }
         ],
         "responses": {
           "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
-    "/api/v1/contacts/lists/search/name": {
-      "post": {
-        "tags": [
-          "Lists"
-        ],
-        "summary": "Search through lists by name",
-        "description": "Search through lists by name",
-        "operationId": "ListController_searchLists",
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SearchListsDto"
+            "description": "Entity given",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedListData"
+                }
               }
             }
           },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": ""
+          "400": {
+            "description": "Bad model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpBadRequestException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKey": []
           }
         ]
       }
     },
-    "/api/v1/contacts/lists/search": {
-      "post": {
+    "/api/v1/properties": {
+      "get": {
         "tags": [
-          "Lists"
+          "Properties"
         ],
-        "summary": "Search lists",
-        "description": "Search lists by search type",
-        "operationId": "ListController_search",
-        "parameters": [
-          {
-            "name": "order",
-            "in": "query",
-            "description": "Should be ASC or DESC",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "Sort field",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "pageNumber",
-            "in": "query",
-            "description": "Page number",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "pageSize",
-            "in": "query",
-            "description": "Page size",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SearchListsDto"
+        "summary": "Get all properties",
+        "description": "Get properties for all entity types",
+        "operationId": "PropertiesController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Entity given",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PropertyModel"
+                }
               }
             }
           },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": ""
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKey": []
           }
         ]
       }
@@ -523,12 +505,59 @@
         },
         "responses": {
           "201": {
-            "description": ""
+            "description": "Entity created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpBadRequestException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKey": []
           }
         ]
       }
@@ -556,12 +585,49 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Entity given",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpBadRequestException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKey": []
           }
         ]
       },
@@ -586,13 +652,43 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": ""
+          "204": {
+            "description": "No content"
+          },
+          "400": {
+            "description": "Bad model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpBadRequestException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKey": []
           }
         ]
       },
@@ -628,12 +724,49 @@
         },
         "responses": {
           "200": {
-            "description": ""
+            "description": "Entity given",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpBadRequestException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKey": []
           }
         ]
       }
@@ -648,14 +781,36 @@
         "operationId": "ContactController_search",
         "parameters": [
           {
-            "name": "order",
+            "name": "includeCount",
             "in": "query",
-            "description": "Should be ASC or DESC",
+            "description": "Include size of contacts",
             "required": false,
             "style": "form",
             "explode": true,
             "schema": {
-              "type": "string"
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Page size(default 10, max 500)",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Page number(default 1)",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
             }
           },
           {
@@ -670,60 +825,6 @@
             }
           },
           {
-            "name": "pageNumber",
-            "in": "query",
-            "description": "Page number",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "pageSize",
-            "in": "query",
-            "description": "Page size",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SearchContactsDto"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
-    "/api/v1/contacts/contact/search/count": {
-      "post": {
-        "tags": [
-          "Contacts"
-        ],
-        "summary": "Search contacts",
-        "description": "Search contacts by filter",
-        "operationId": "ContactController_searchCount",
-        "parameters": [
-          {
             "name": "order",
             "in": "query",
             "description": "Should be ASC or DESC",
@@ -733,39 +834,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "Sort field",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "pageNumber",
-            "in": "query",
-            "description": "Page number",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "pageSize",
-            "in": "query",
-            "description": "Page size",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "number"
-            }
           }
         ],
         "requestBody": {
@@ -776,16 +844,43 @@
               }
             }
           },
-          "required": true
+          "required": false
         },
         "responses": {
           "200": {
-            "description": ""
+            "description": "Entity given",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedContactData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpBadRequestException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKey": []
           }
         ]
       }
@@ -822,277 +917,53 @@
           "required": true
         },
         "responses": {
-          "201": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
-    "/api/v1/contacts/folders": {
-      "post": {
-        "tags": [
-          "Folders"
-        ],
-        "summary": "Create list folder",
-        "description": "Add new folder",
-        "operationId": "FolderController_create",
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateFolderDto"
+          "200": {
+            "description": "Entity given"
+          },
+          "400": {
+            "description": "Bad model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpBadRequestException"
+                }
               }
             }
           },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
-    "/api/v1/contacts/folders/{folderId}": {
-      "patch": {
-        "tags": [
-          "Folders"
-        ],
-        "summary": "Update folder",
-        "description": "Update folder by id",
-        "operationId": "FolderController_updateFolder",
-        "parameters": [
-          {
-            "name": "folderId",
-            "in": "path",
-            "description": "Folder id",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateFolderDto"
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
               }
             }
           },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
-    "/api/v1/contacts/folders/tree": {
-      "get": {
-        "tags": [
-          "Folders"
-        ],
-        "summary": "Get folders tree",
-        "description": "Get folders tree",
-        "operationId": "FolderController_getFoldersTree",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
-    "/api/v1/contacts/folders/{folderId}/lists": {
-      "get": {
-        "tags": [
-          "Folders"
-        ],
-        "summary": "Get folder lists",
-        "description": "Retrive all lists related to folder",
-        "operationId": "FolderController_getFolderLists",
-        "parameters": [
-          {
-            "name": "folderId",
-            "in": "path",
-            "description": "Folder id",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      },
-      "post": {
-        "tags": [
-          "Folders"
-        ],
-        "summary": "Move lists to folder",
-        "description": "Move lists to folder",
-        "operationId": "FolderController_addList",
-        "parameters": [
-          {
-            "name": "folderId",
-            "in": "path",
-            "description": "Folder id",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddListsDto"
+          "404": {
+            "description": "Entity not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
               }
             }
           },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "Folders"
-        ],
-        "summary": "Remove lists from folder",
-        "description": "Remove lists from folder",
-        "operationId": "FolderController_removeListsFromFolder",
-        "parameters": [
-          {
-            "name": "folderId",
-            "in": "path",
-            "description": "Folder id",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
-    "/api/v1/contacts/folders/{folderId}/all": {
-      "post": {
-        "tags": [
-          "Folders"
-        ],
-        "summary": "Move lists with folders to folder",
-        "description": "Move lists with folders to folder",
-        "operationId": "FolderController_addListsWithFolders",
-        "parameters": [
-          {
-            "name": "folderId",
-            "in": "path",
-            "description": "Folder id",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddListsWithFoldersDto"
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
               }
             }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": ""
           }
         },
         "security": [
           {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
-    "/api/v1/contacts/folders/lists": {
-      "get": {
-        "tags": [
-          "Folders"
-        ],
-        "summary": "Get folders lists",
-        "description": "Get folders lists",
-        "operationId": "FolderController_getFoldersLists",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
+            "apiKey": []
           }
         ]
       }
@@ -1107,14 +978,25 @@
         "operationId": "CompanyController_findAll",
         "parameters": [
           {
-            "name": "order",
+            "name": "pageSize",
             "in": "query",
-            "description": "Should be ASC or DESC",
+            "description": "Page size(default 10, max 500)",
             "required": false,
             "style": "form",
             "explode": true,
             "schema": {
-              "type": "string"
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Page number(default 1)",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
             }
           },
           {
@@ -1129,36 +1011,42 @@
             }
           },
           {
-            "name": "pageNumber",
+            "name": "order",
             "in": "query",
-            "description": "Page number",
+            "description": "Should be ASC or DESC",
             "required": false,
             "style": "form",
             "explode": true,
             "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "pageSize",
-            "in": "query",
-            "description": "Page size",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "number"
+              "type": "string"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Entity given",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedCompanyData"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKey": []
           }
         ]
       },
@@ -1182,17 +1070,44 @@
         },
         "responses": {
           "201": {
-            "description": ""
+            "description": "Entity created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpBadRequestException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKey": []
           }
         ]
       }
     },
-    "/api/v1/companies/company/search/name": {
+    "/api/v1/companies/company/search/query": {
       "get": {
         "tags": [
           "Companies"
@@ -1220,18 +1135,55 @@
             "style": "form",
             "explode": true,
             "schema": {
-              "type": "string"
+              "type": "number"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Entity given",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKey": []
           }
         ]
       }
@@ -1259,12 +1211,49 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Entity given",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpBadRequestException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKey": []
           }
         ]
       },
@@ -1289,13 +1278,43 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": ""
+          "204": {
+            "description": "No content"
+          },
+          "400": {
+            "description": "Bad model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpBadRequestException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKey": []
           }
         ]
       },
@@ -1331,12 +1350,49 @@
         },
         "responses": {
           "200": {
-            "description": ""
+            "description": "Entity given",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpBadRequestException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKey": []
           }
         ]
       }
@@ -1362,12 +1418,59 @@
         },
         "responses": {
           "201": {
-            "description": ""
+            "description": "Entity created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InsightSearchModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpBadRequestException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Insufficiently credits",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKey": []
           }
         ]
       }
@@ -1394,12 +1497,123 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Entity given",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactInsightModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpBadRequestException"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Insufficiently credits",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/v1/insights/search/companies": {
+      "get": {
+        "tags": [
+          "Insights"
+        ],
+        "summary": "Search insight companies",
+        "description": "Search insight companies by name or domain",
+        "operationId": "InsightsController_searchCompaniesByNameOrDomain",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Company name or domain",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit companies(default 10, max 100)",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Entity given",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompanyInsightModel"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKey": []
           }
         ]
       }
@@ -1427,44 +1641,49 @@
         ],
         "responses": {
           "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
-    "/public/v1/email/verify/": {
-      "post": {
-        "tags": [
-          "Email"
-        ],
-        "summary": "Verify Email",
-        "description": "Verify email",
-        "operationId": "PublicApiController_sendBounceEmail",
-        "parameters": [
-          {
-            "name": "email",
-            "in": "query",
-            "required": true,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string"
+            "description": "Entity given",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InsightSearchModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpBadRequestException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
             }
           }
-        ],
-        "responses": {
-          "201": {
-            "description": ""
-          }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKey": []
           }
         ]
       }
@@ -1474,23 +1693,14 @@
         "tags": [
           "Email"
         ],
-        "summary": "Find Email",
-        "description": "Find email by name and company",
-        "operationId": "PublicApiController_publicVerifyEmail",
+        "summary": "Verify Email",
+        "description": "Verify email",
+        "operationId": "PublicApiEmailController_sendBounceEmail",
         "parameters": [
           {
-            "name": "name",
+            "name": "email",
             "in": "query",
-            "required": true,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "company",
-            "in": "query",
+            "description": "Email",
             "required": true,
             "style": "form",
             "explode": true,
@@ -1501,12 +1711,223 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Entity given",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FoundVerifiedEmail"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Request timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
           }
         },
         "security": [
           {
-            "bearerAuth": []
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/public/v1/email/find": {
+      "get": {
+        "tags": [
+          "Email"
+        ],
+        "summary": "Find Email",
+        "description": "Find email by name and company name or company domain",
+        "operationId": "PublicApiEmailController_publicFindEmail",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "company",
+            "in": "query",
+            "description": "Company",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Entity given",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FoundEmail"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpBadRequestException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Request timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/public/v1/insights/contacts": {
+      "post": {
+        "tags": [
+          "Insights"
+        ],
+        "summary": "Find contacts",
+        "description": "Find contacts",
+        "operationId": "PublicApiInsightsController_publicSearchContacts",
+        "parameters": [
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Page size(default 10, max 500)",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Page number(default 1)",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort field",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Should be ASC or DESC",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchInsightsDto"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Entity given",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedContactsData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpBadRequestException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpException"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKey": []
           }
         ]
       }
@@ -1514,9 +1935,227 @@
   },
   "components": {
     "schemas": {
-      "SearchListsCountDto": {
+      "ListModel": {
+        "required": [
+          "deleted",
+          "dynamic",
+          "lastAddedContactAt",
+          "listId",
+          "name",
+          "owner",
+          "workspaceId"
+        ],
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "dynamic": {
+            "type": "boolean"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "workspaceId": {
+            "type": "number"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "lastAddedContactAt": {
+            "type": "string"
+          },
+          "listId": {
+            "type": "number"
+          }
+        }
+      },
+      "HttpException": {
+        "required": [
+          "message",
+          "statusCode"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "All details about an error"
+          },
+          "statusCode": {
+            "type": "string",
+            "description": "Http status code",
+            "enum": [
+              "CONTINUE",
+              "SWITCHING_PROTOCOLS",
+              "PROCESSING",
+              "OK",
+              "CREATED",
+              "ACCEPTED",
+              "NON_AUTHORITATIVE_INFORMATION",
+              "NO_CONTENT",
+              "RESET_CONTENT",
+              "PARTIAL_CONTENT",
+              "AMBIGUOUS",
+              "MOVED_PERMANENTLY",
+              "FOUND",
+              "SEE_OTHER",
+              "NOT_MODIFIED",
+              "TEMPORARY_REDIRECT",
+              "PERMANENT_REDIRECT",
+              "BAD_REQUEST",
+              "UNAUTHORIZED",
+              "PAYMENT_REQUIRED",
+              "FORBIDDEN",
+              "NOT_FOUND",
+              "METHOD_NOT_ALLOWED",
+              "NOT_ACCEPTABLE",
+              "PROXY_AUTHENTICATION_REQUIRED",
+              "REQUEST_TIMEOUT",
+              "CONFLICT",
+              "GONE",
+              "LENGTH_REQUIRED",
+              "PRECONDITION_FAILED",
+              "PAYLOAD_TOO_LARGE",
+              "URI_TOO_LONG",
+              "UNSUPPORTED_MEDIA_TYPE",
+              "REQUESTED_RANGE_NOT_SATISFIABLE",
+              "EXPECTATION_FAILED",
+              "I_AM_A_TEAPOT",
+              "UNPROCESSABLE_ENTITY",
+              "FAILED_DEPENDENCY",
+              "TOO_MANY_REQUESTS",
+              "INTERNAL_SERVER_ERROR",
+              "NOT_IMPLEMENTED",
+              "BAD_GATEWAY",
+              "SERVICE_UNAVAILABLE",
+              "GATEWAY_TIMEOUT",
+              "HTTP_VERSION_NOT_SUPPORTED"
+            ]
+          },
+          "error": {
+            "type": "string",
+            "description": "Base message about an error"
+          }
+        }
+      },
+      "SearchListsCountDto": {
+        "required": [
+          "listIds"
+        ],
+        "type": "object",
+        "properties": {
+          "listIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ListSizesResponse": {
+        "required": [
+          "contactsCount",
+          "listId"
+        ],
+        "type": "object",
+        "properties": {
+          "contactsCount": {
+            "type": "number"
+          },
+          "listId": {
+            "type": "string"
+          }
+        }
+      },
+      "IError": {
+        "required": [
+          "details",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "details": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+      },
+      "HttpBadRequestException": {
+        "required": [
+          "message",
+          "statusCode"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "All details about an error"
+          },
+          "statusCode": {
+            "type": "string",
+            "description": "Http status code",
+            "enum": [
+              "CONTINUE",
+              "SWITCHING_PROTOCOLS",
+              "PROCESSING",
+              "OK",
+              "CREATED",
+              "ACCEPTED",
+              "NON_AUTHORITATIVE_INFORMATION",
+              "NO_CONTENT",
+              "RESET_CONTENT",
+              "PARTIAL_CONTENT",
+              "AMBIGUOUS",
+              "MOVED_PERMANENTLY",
+              "FOUND",
+              "SEE_OTHER",
+              "NOT_MODIFIED",
+              "TEMPORARY_REDIRECT",
+              "PERMANENT_REDIRECT",
+              "BAD_REQUEST",
+              "UNAUTHORIZED",
+              "PAYMENT_REQUIRED",
+              "FORBIDDEN",
+              "NOT_FOUND",
+              "METHOD_NOT_ALLOWED",
+              "NOT_ACCEPTABLE",
+              "PROXY_AUTHENTICATION_REQUIRED",
+              "REQUEST_TIMEOUT",
+              "CONFLICT",
+              "GONE",
+              "LENGTH_REQUIRED",
+              "PRECONDITION_FAILED",
+              "PAYLOAD_TOO_LARGE",
+              "URI_TOO_LONG",
+              "UNSUPPORTED_MEDIA_TYPE",
+              "REQUESTED_RANGE_NOT_SATISFIABLE",
+              "EXPECTATION_FAILED",
+              "I_AM_A_TEAPOT",
+              "UNPROCESSABLE_ENTITY",
+              "FAILED_DEPENDENCY",
+              "TOO_MANY_REQUESTS",
+              "INTERNAL_SERVER_ERROR",
+              "NOT_IMPLEMENTED",
+              "BAD_GATEWAY",
+              "SERVICE_UNAVAILABLE",
+              "GATEWAY_TIMEOUT",
+              "HTTP_VERSION_NOT_SUPPORTED"
+            ]
+          },
+          "error": {
+            "type": "string",
+            "description": "Base message about an error"
+          },
+          "errors": {
+            "type": "array",
+            "description": "Array of a path and message about an invalid property",
+            "items": {
+              "$ref": "#/components/schemas/IError"
+            }
+          }
+        }
       },
       "CreateListDto": {
         "required": [
@@ -1540,32 +2179,7 @@
           }
         }
       },
-      "UpdateListStatusDto": {
-        "required": [
-          "listsIds",
-          "operationType",
-          "updateContactsStatus"
-        ],
-        "type": "object",
-        "properties": {
-          "listsIds": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "updateContactsStatus": {
-            "type": "boolean"
-          },
-          "operationType": {
-            "type": "string"
-          }
-        }
-      },
       "AddContactsDto": {
-        "required": [
-          "contactsIds"
-        ],
         "type": "object",
         "properties": {
           "contactsIds": {
@@ -1576,13 +2190,133 @@
           }
         }
       },
-      "SearchListsDto": {
+      "Sort": {
         "required": [
-          "withParentFolder"
+          "column",
+          "order"
         ],
         "type": "object",
         "properties": {
-          "withParentFolder": {
+          "column": {
+            "type": "string"
+          },
+          "order": {
+            "type": "string",
+            "enum": [
+              "ASC",
+              "DESC"
+            ]
+          }
+        }
+      },
+      "Meta": {
+        "required": [
+          "page",
+          "pageSize",
+          "savedItems",
+          "sort",
+          "totalItems",
+          "totalPages"
+        ],
+        "type": "object",
+        "properties": {
+          "totalPages": {
+            "type": "number"
+          },
+          "totalItems": {
+            "type": "number"
+          },
+          "savedItems": {
+            "type": "number"
+          },
+          "pageSize": {
+            "type": "number"
+          },
+          "page": {
+            "type": "number"
+          },
+          "sort": {
+            "$ref": "#/components/schemas/Sort"
+          }
+        }
+      },
+      "PaginatedListData": {
+        "required": [
+          "data",
+          "meta"
+        ],
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ListModel"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          }
+        }
+      },
+      "PropertyModel": {
+        "required": [
+          "custom",
+          "default",
+          "description",
+          "fieldType",
+          "group",
+          "hidden",
+          "label",
+          "name",
+          "owner",
+          "required",
+          "sourceType",
+          "unique",
+          "workspaceId"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "sourceType": {
+            "type": "string",
+            "enum": [
+              "contact",
+              "company"
+            ]
+          },
+          "fieldType": {
+            "type": "string"
+          },
+          "group": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "number"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "default": {
+            "type": "boolean"
+          },
+          "custom": {
+            "type": "boolean"
+          },
+          "hidden": {
+            "type": "boolean"
+          },
+          "unique": {
             "type": "boolean"
           }
         }
@@ -1598,13 +2332,12 @@
             "type": "string"
           },
           "value": {
-            "type": "object"
+            "type": "string"
           }
         }
       },
       "CreateContactDto": {
         "required": [
-          "listRelations",
           "properties"
         ],
         "type": "object",
@@ -1623,32 +2356,188 @@
           }
         }
       },
+      "ObjectID": {
+        "type": "object",
+        "properties": {}
+      },
+      "CompanyRelation": {
+        "required": [
+          "company",
+          "position"
+        ],
+        "type": "object",
+        "properties": {
+          "position": {
+            "type": "string"
+          },
+          "company": {
+            "$ref": "#/components/schemas/Company"
+          }
+        }
+      },
+      "ContactLinkedin": {
+        "required": [
+          "id",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "ContactModel": {
+        "required": [
+          "_id",
+          "companyRelations",
+          "createdAt",
+          "deleted",
+          "insightId",
+          "linkedin",
+          "listRelations",
+          "owner",
+          "properties",
+          "search",
+          "source",
+          "updatedAt",
+          "workspaceId"
+        ],
+        "type": "object",
+        "properties": {
+          "_id": {
+            "$ref": "#/components/schemas/ObjectID"
+          },
+          "owner": {
+            "$ref": "#/components/schemas/ObjectID"
+          },
+          "source": {
+            "type": "string"
+          },
+          "properties": {
+            "type": "object"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "workspaceId": {
+            "type": "number"
+          },
+          "search": {
+            "$ref": "#/components/schemas/ObjectID"
+          },
+          "listRelations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "companyRelations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CompanyRelation"
+            }
+          },
+          "insightId": {
+            "$ref": "#/components/schemas/ObjectID"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "linkedin": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactLinkedin"
+            }
+          }
+        }
+      },
+      "ContactResponse": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactModel"
+            }
+          }
+        }
+      },
       "Included": {
         "required": [
-          "operator",
-          "value"
+          "operator"
         ],
         "type": "object",
         "properties": {
           "operator": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "EQ",
+              "NEQ",
+              "IS_NOT_EMPTY",
+              "IS_EMPTY",
+              "CONTAINS",
+              "LT",
+              "LTE",
+              "GT",
+              "GTE",
+              "LIKE",
+              "NOT_LIKE",
+              "CONTAINS_ANY",
+              "NOT_CONTAINS_ANY",
+              "NOT_EXISTS"
+            ]
           },
           "value": {
-            "type": "object"
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
           }
         }
       },
       "FilterItem": {
         "required": [
-          "included",
-          "operator",
-          "property",
-          "value"
+          "property"
         ],
         "type": "object",
         "properties": {
           "operator": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "EQ",
+              "NEQ",
+              "IS_NOT_EMPTY",
+              "IS_EMPTY",
+              "CONTAINS",
+              "LT",
+              "LTE",
+              "GT",
+              "GTE",
+              "LIKE",
+              "NOT_LIKE",
+              "CONTAINS_ANY",
+              "NOT_CONTAINS_ANY",
+              "NOT_EXISTS"
+            ]
           },
           "property": {
             "type": "string"
@@ -1680,11 +2569,6 @@
         }
       },
       "SearchContactsDto": {
-        "required": [
-          "filters",
-          "includeRelations",
-          "search"
-        ],
         "type": "object",
         "properties": {
           "filters": {
@@ -1697,7 +2581,37 @@
             "$ref": "#/components/schemas/SearchItem"
           },
           "includeRelations": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Includes companies, owner and lists in each of contacts"
+          },
+          "includes": {
+            "type": "array",
+            "description": "Company fields(domain, name and etc.)",
+            "items": {
+              "type": "string"
+            }
+          },
+          "deleted": {
+            "type": "boolean",
+            "description": "Returns only deleted contacts if true"
+          }
+        }
+      },
+      "PaginatedContactData": {
+        "required": [
+          "data",
+          "meta"
+        ],
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactModel"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
           }
         }
       },
@@ -1735,67 +2649,85 @@
           }
         }
       },
-      "CreateFolderDto": {
-        "required": [
-          "name",
-          "parent"
-        ],
+      "CompanyModel": {
         "type": "object",
         "properties": {
-          "name": {
+          "_id": {
             "type": "string"
           },
-          "parent": {
-            "type": "string"
-          }
-        }
-      },
-      "DeleteFolderDto": {
-        "required": [
-          "folderIds"
-        ],
-        "type": "object",
-        "properties": {
-          "folderIds": {
+          "alternativeNames": {
             "type": "array",
             "items": {
               "type": "string"
             }
-          }
-        }
-      },
-      "UpdateFolderDto": {
-        "required": [
-          "name",
-          "parent"
-        ],
-        "type": "object",
-        "properties": {
+          },
+          "deleted": {
+            "type": "boolean"
+          },
           "name": {
             "type": "string"
           },
-          "parent": {
+          "size": {
+            "type": "number"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "pattern": {
+            "type": "string"
+          },
+          "headquarters": {
+            "type": "string"
+          },
+          "postalCode": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "lastUpdatedAt": {
+            "type": "string"
+          },
+          "linkedin": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LinkedinInsightModel"
+            }
+          },
+          "industry": {
+            "$ref": "#/components/schemas/IndustryInsightModel"
+          },
+          "country": {
+            "type": "string"
+          },
+          "position": {
             "type": "string"
           }
         }
       },
-      "AddListsDto": {
+      "PaginatedCompanyData": {
         "required": [
-          "listsIds"
+          "data",
+          "meta"
         ],
         "type": "object",
         "properties": {
-          "listsIds": {
+          "data": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/CompanyModel"
             }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
           }
         }
-      },
-      "AddListsWithFoldersDto": {
-        "type": "object",
-        "properties": {}
       },
       "CreateCompanyDto": {
         "required": [
@@ -1808,16 +2740,627 @@
           }
         }
       },
-      "CreateSearchDto": {
+      "CompanyResponse": {
+        "required": [
+          "data"
+        ],
         "type": "object",
-        "properties": {}
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/CompanyModel"
+          }
+        }
+      },
+      "FilterAffiliationItem": {
+        "required": [
+          "operator",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "operator": {
+            "type": "string",
+            "enum": [
+              "EQ",
+              "IS_NOT_EMPTY",
+              "CONTAINS",
+              "KEYWORDS_SEARCH",
+              "CONTAINS_NAME",
+              "CONTAINS_SENIORITY",
+              "CONTAINS_POSITION",
+              "RANGE",
+              "UNIVERSAL_RANGE",
+              "LOCATION",
+              "EMAIL_STATUS",
+              "INCLUDE",
+              "NEQ",
+              "NOT_CONTAINS",
+              "NOT_CONTAINS_NAME",
+              "NOT_LOCATION",
+              "NOT_CONTAINS_SENIORITY",
+              "NOT_CONTAINS_POSITION",
+              "EXCLUDE"
+            ]
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "CreateSearchFilterItem": {
+        "required": [
+          "excluded",
+          "included",
+          "property"
+        ],
+        "type": "object",
+        "properties": {
+          "property": {
+            "type": "string",
+            "enum": [
+              "c",
+              "o",
+              "n",
+              "t",
+              "a",
+              ".",
+              "m",
+              "e"
+            ]
+          },
+          "excluded": {
+            "$ref": "#/components/schemas/FilterAffiliationItem"
+          },
+          "included": {
+            "$ref": "#/components/schemas/FilterAffiliationItem"
+          }
+        }
+      },
+      "LimitsItem": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "number",
+            "description": "Limit contacts to save"
+          },
+          "perCompany": {
+            "type": "number"
+          }
+        }
+      },
+      "CreateSearchDto": {
+        "required": [
+          "filters",
+          "saveAdded",
+          "source"
+        ],
+        "type": "object",
+        "properties": {
+          "filters": {
+            "$ref": "#/components/schemas/CreateSearchFilterItem"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "contact",
+              "company"
+            ]
+          },
+          "limits": {
+            "$ref": "#/components/schemas/LimitsItem"
+          },
+          "listIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "saveAdded": {
+            "type": "boolean"
+          },
+          "insightIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "IInsightSearch": {
+        "required": [
+          "perCompany",
+          "total"
+        ],
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "number"
+          },
+          "perCompany": {
+            "type": "number"
+          }
+        }
+      },
+      "InsightSearchModel": {
+        "required": [
+          "_id",
+          "createdAt",
+          "filters",
+          "limits",
+          "listIds",
+          "note",
+          "processingComplete",
+          "saveAdded",
+          "saved",
+          "selected",
+          "source",
+          "status",
+          "updatedAt",
+          "user",
+          "workspaceId"
+        ],
+        "type": "object",
+        "properties": {
+          "_id": {
+            "$ref": "#/components/schemas/ObjectID"
+          },
+          "filters": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "in_progress",
+              "failed",
+              "done",
+              "stopped"
+            ]
+          },
+          "user": {
+            "$ref": "#/components/schemas/ObjectID"
+          },
+          "workspaceId": {
+            "type": "number"
+          },
+          "limits": {
+            "$ref": "#/components/schemas/IInsightSearch"
+          },
+          "saved": {
+            "type": "number"
+          },
+          "selected": {
+            "type": "number"
+          },
+          "saveAdded": {
+            "type": "boolean"
+          },
+          "note": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "contact",
+              "company"
+            ]
+          },
+          "listIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "processingComplete": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "LinkedinInsightModel": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "IndustryInsightModel": {
+        "required": [
+          "_id",
+          "en_US"
+        ],
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "en_US": {
+            "type": "string"
+          }
+        }
+      },
+      "ContactInsightModel": {
+        "required": [
+          "_id"
+        ],
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "statusId": {
+            "type": "number"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "emailCheckedAt": {
+            "type": "string"
+          },
+          "contactInfo": {
+            "type": "string"
+          },
+          "countryCode": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "postalCode": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "linkedinUrl": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "linkedin": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LinkedinInsightModel"
+            }
+          },
+          "incomplete": {
+            "type": "boolean"
+          },
+          "lastUpdatedAt": {
+            "type": "string"
+          },
+          "position": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "company": {
+            "$ref": "#/components/schemas/CompanyModel"
+          }
+        }
+      },
+      "CompanyInsightModel": {
+        "required": [
+          "_id",
+          "createdAt",
+          "updatedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "alternativeNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string"
+          },
+          "size": {
+            "type": "number"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "pattern": {
+            "type": "string"
+          },
+          "headquarters": {
+            "type": "string"
+          },
+          "postalCode": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "lastUpdatedAt": {
+            "type": "string"
+          },
+          "linkedin": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LinkedinInsightModel"
+            }
+          },
+          "industry": {
+            "$ref": "#/components/schemas/IndustryInsightModel"
+          },
+          "country": {
+            "type": "string"
+          }
+        }
+      },
+      "FoundVerifiedEmail": {
+        "required": [
+          "email",
+          "fqdn",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "fqdn": {
+            "type": "string"
+          }
+        }
+      },
+      "FoundEmail": {
+        "required": [
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "SearchInsightFilterItem": {
+        "required": [
+          "excluded",
+          "included",
+          "property"
+        ],
+        "type": "object",
+        "properties": {
+          "property": {
+            "type": "string",
+            "enum": [
+              "c",
+              "o",
+              "n",
+              "t",
+              "a",
+              ".",
+              "m",
+              "e"
+            ]
+          },
+          "excluded": {
+            "$ref": "#/components/schemas/FilterAffiliationItem"
+          },
+          "included": {
+            "$ref": "#/components/schemas/FilterAffiliationItem"
+          }
+        }
+      },
+      "SearchInsightsDto": {
+        "type": "object",
+        "properties": {
+          "filters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SearchInsightFilterItem"
+            }
+          },
+          "operator": {
+            "type": "string",
+            "enum": [
+              "or",
+              "and"
+            ]
+          },
+          "requestType": {
+            "type": "string",
+            "description": "All contacts; include/exclude own workspace",
+            "enum": [
+              "all",
+              "excluded",
+              "included"
+            ]
+          }
+        }
+      },
+      "Company": {
+        "required": [
+          "getProspectId"
+        ],
+        "type": "object",
+        "properties": {
+          "getProspectId": {
+            "type": "string"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "Linkedin": {
+        "required": [
+          "id",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "Geolocation": {
+        "required": [
+          "countryCode",
+          "location",
+          "region",
+          "timezone"
+        ],
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string"
+          },
+          "countryCode": {
+            "type": "string"
+          },
+          "region": {
+            "type": "string"
+          },
+          "timezone": {
+            "type": "string"
+          }
+        }
+      },
+      "ContactsResponseDto": {
+        "required": [
+          "companies",
+          "geolocation",
+          "getProspectId",
+          "lastUpdatedAt",
+          "linkedin"
+        ],
+        "type": "object",
+        "properties": {
+          "getProspectId": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "emailCheckedAt": {
+            "type": "string"
+          },
+          "contactInfo": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "companies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CompanyRelation"
+            }
+          },
+          "lastUpdatedAt": {
+            "type": "string"
+          },
+          "linkedin": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Linkedin"
+            }
+          },
+          "geolocation": {
+            "$ref": "#/components/schemas/Geolocation"
+          }
+        }
+      },
+      "PaginatedContactsData": {
+        "required": [
+          "data",
+          "meta"
+        ],
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactsResponseDto"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          }
+        }
       }
     },
     "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
+      "apiKey": {
+        "type": "apiKey",
+        "name": "apiKey",
+        "in": "header"
       }
     }
   }
